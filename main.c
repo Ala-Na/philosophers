@@ -6,15 +6,18 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 15:32:34 by anadege           #+#    #+#             */
-/*   Updated: 2021/08/05 21:11:11 by anadege          ###   ########.fr       */
+/*   Updated: 2021/08/06 15:56:04 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
+int	g_end = 0;
+
 int	main(int argc, char **argv)
 {
 	t_arguments	*args;
+	t_philo		*philo;
 
 	args = malloc(sizeof(*args));
 	if (!args)
@@ -30,7 +33,19 @@ int	main(int argc, char **argv)
 		printf("Error in arguments received.\nThey must be positive integers.\n");
 		return (-1);
 	}
-	printf("philo : %i, die : %i, eat : %i, sleep : %i, meals : %i\n", args->nbr_philo, args->time_die, args->time_eat, args->time_sleep, args->nbr_meals);
+	philo = init_philo(args);
+	if (!philo)
+	{
+		free(args);
+		return (-1);
+	}
+	if(init_threads(philo, args) == -1)
+	{
+		free(args);
+		free(philo);
+		return (-1);
+	}
 	free(args);
+	free(philo);
 	return (0);
 }
