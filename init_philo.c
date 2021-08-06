@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/06 14:41:48 by anadege           #+#    #+#             */
-/*   Updated: 2021/08/06 16:01:12 by anadege          ###   ########.fr       */
+/*   Updated: 2021/08/06 22:46:34 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,7 @@ void	*philo_launch(void *received)
 {
 	t_philo	*philo;
 	philo = (t_philo *)received;
-	printf("philo id is %i with state %i and priority %i.\n", philo->philo_id, philo->state, philo->priority);
-	int i = 0;
-	printf("Others : ");
-	while (i < philo->args->nbr_philo)
-	{
-		if (i + 1 != philo->philo_id)
-			printf("philo n°%i, ", philo->others[i].philo_id);
-		i++;
-	}
-	printf("\n");
+	printf("philo id is %i with state %i.\n", philo->philo_id, philo->state);
 	return ((void *)philo);
 }
 
@@ -40,7 +31,12 @@ int	init_threads(t_philo *philo, t_arguments *args)
 			return (-1);
 		i++;
 	}
-	usleep(10000000);
+	i = 0;
+	while (i < args->nbr_philo)
+	{
+		pthread_join(philo[i].thread, NULL);
+		i++;
+	}
 	return (0);
 }
 
@@ -63,11 +59,13 @@ t_philo	*init_philo(t_arguments *args)
 	{
 		philo[i].philo_id = i + 1;
 		philo[i].state = THINK;
-		philo[i].priority = 0;
-		philo[i].last_meal = 0;
-		philo[i].nbr_meals = 0;
+		if (i + 1 < args->nbr_philo)
+			philo[i].left_fork = args->forks[i + 1];
+		else
+			philo[i].right_fork = args->forks[0];
+		philo[i].right_fork = args->forks[i];
+		philo[i].meals = 0;
 		philo[i].args = args;
-		philo[i].others = philo;
 		i++;
 	}
 	return (philo);

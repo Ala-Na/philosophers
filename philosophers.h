@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 15:32:54 by anadege           #+#    #+#             */
-/*   Updated: 2021/08/06 15:47:15 by anadege          ###   ########.fr       */
+/*   Updated: 2021/08/06 22:38:00 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,6 @@
 # include <stdio.h>
 # include <sys/time.h>
 # include <limits.h>
-
-/*
-** Global variable which will equal 1 if one of the ending condition is met.
-** (One of the philosophers died or they all had the expected number of meals).
-*/
-extern int	g_end;
 
 /*
 ** Global variable to stock timestamp in milliseconds when the programm is launching.
@@ -48,11 +42,14 @@ typedef enum	e_state
 */
 typedef struct	s_arguments
 {
-	int		nbr_philo;
-	int		time_die;
-	int		time_eat;
-	int		time_sleep;
-	int		nbr_meals;
+	int				nbr_philo;
+	int				time_die;
+	int				time_eat;
+	int				time_sleep;
+	int				nbr_meals;
+	pthread_mutex_t	end;
+	pthread_mutex_t	print_status;
+	pthread_mutex_t	*forks;
 }	t_arguments;
 
 /*
@@ -63,9 +60,9 @@ typedef struct	s_philo
 	int				philo_id;
 	pthread_t		thread;
 	t_state			state;
-	int				priority;
-	unsigned long	last_meal;
-	int				nbr_meals;
+	pthread_mutex_t	left_fork;
+	pthread_mutex_t	right_fork;
+	int				meals;
 	t_arguments		*args;
 	struct s_philo	*others;
 }	t_philo;

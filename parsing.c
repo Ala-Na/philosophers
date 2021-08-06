@@ -6,11 +6,29 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 15:45:17 by anadege           #+#    #+#             */
-/*   Updated: 2021/08/05 21:10:04 by anadege          ###   ########.fr       */
+/*   Updated: 2021/08/06 22:43:05 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+int	init_args_mutex(t_arguments *args)
+{
+	int	i;
+
+	i = 0;
+	args->forks = malloc(sizeof(*args->forks) * args->nbr_philo);
+	if (!args->forks)
+		return (-1);
+	while (i < args->nbr_philo)
+	{
+		pthread_mutex_init(&args->forks[i], NULL);
+		i++;
+	}
+	pthread_mutex_init(&args->end, NULL);
+	pthread_mutex_init(&args->print_status, NULL);
+	return (0);
+}
 
 static int	return_value(long int res, long int sign,
 		int *check_nbr, int cursor)
@@ -101,7 +119,7 @@ int	check_and_extract_args(int argc, char **argv, t_arguments *args)
 	int	check_nbr;
 
 	check_nbr = 0;
-	if (get_args(argv + 1, args, argc - 1, &check_nbr) == -1 || check_nbr == -1)
+	if (get_args(argv + 1, args, argc - 1, &check_nbr) == -1 || check_nbr == -1 || init_args_mutex(args) == -1)
 	{
 		if (args)
 			free(args);

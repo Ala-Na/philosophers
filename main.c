@@ -6,13 +6,11 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 15:32:34 by anadege           #+#    #+#             */
-/*   Updated: 2021/08/06 15:56:04 by anadege          ###   ########.fr       */
+/*   Updated: 2021/08/06 22:48:15 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
-int	g_end = 0;
 
 int	main(int argc, char **argv)
 {
@@ -36,15 +34,18 @@ int	main(int argc, char **argv)
 	philo = init_philo(args);
 	if (!philo)
 	{
+		free(args->forks);
 		free(args);
 		return (-1);
 	}
 	if(init_threads(philo, args) == -1)
 	{
+		free(args->forks);
 		free(args);
 		free(philo);
 		return (-1);
 	}
+	free(args->forks);
 	free(args);
 	free(philo);
 	return (0);
