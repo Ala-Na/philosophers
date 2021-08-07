@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 15:32:54 by anadege           #+#    #+#             */
-/*   Updated: 2021/08/06 22:38:00 by anadege          ###   ########.fr       */
+/*   Updated: 2021/08/07 17:53:55 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ typedef struct	s_philo
 	pthread_mutex_t	right_fork;
 	int				meals;
 	t_arguments		*args;
-	struct s_philo	*others;
 }	t_philo;
 
 /*
@@ -86,5 +85,14 @@ int ft_atoi_like(const char *nptr, int *check_nbr);
 t_philo	*init_philo(t_arguments *args);
 int		init_threads(t_philo *philo, t_arguments *args);
 void	*philo_launch(void *received);
+
+int	script_for_even(t_philo *philo);
+int	script_for_odd(t_philo *philo);
+
+int	take_right_fork(t_philo *philo);
+int	take_left_fork(t_philo *philo);
+int	think (t_philo *philo);
+int	nap(t_philo *philo);
+int	eat(t_philo *philo);
 
 #endif

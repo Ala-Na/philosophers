@@ -1,30 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   scripts.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/06 14:31:59 by anadege           #+#    #+#             */
-/*   Updated: 2021/08/07 16:45:55 by anadege          ###   ########.fr       */
+/*   Created: 2021/08/07 17:27:16 by anadege           #+#    #+#             */
+/*   Updated: 2021/08/07 17:53:50 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-unsigned long	g_launch = -1;
-
-unsigned long	timestamp(void)
+int	script_for_odd(t_philo *philo)
 {
-	struct timeval	time;
-	unsigned long	timestamp;
+	if (take_left_fork(philo) == -1 || take_right_fork(philo) == -1
+			|| eat(philo) == -1 || nap(philo) == -1
+			|| think(philo) == -1)
+		return (-1);
+	return (0);
+}
 
-	gettimeofday(&time, NULL);
-	if (g_launch == -1)
-	{
-		g_launch = 1000 * time.tv_sec + time.tv_usec / 1000;
-		return (0);
-	}
-	timestamp = 1000 * time.tv_sec + time.tv_usec / 1000 - g_launch;
-	return (timestamp);
+int	script_for_even(t_philo *philo)
+{
+	if (take_right_fork(philo) == -1 || take_left_fork(philo) == -1
+			|| eat(philo) == -1 || nap(philo) == -1
+			|| think(philo) == -1)
+		return (-1);
+	return (0);
 }

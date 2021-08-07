@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/06 14:41:48 by anadege           #+#    #+#             */
-/*   Updated: 2021/08/06 22:46:34 by anadege          ###   ########.fr       */
+/*   Updated: 2021/08/07 17:38:18 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,14 @@
 void	*philo_launch(void *received)
 {
 	t_philo	*philo;
+
 	philo = (t_philo *)received;
-	printf("philo id is %i with state %i.\n", philo->philo_id, philo->state);
+	if (philo->philo_id % 2 == 1)
+		script_for_odd(philo);
+	else
+		script_for_even(philo);
+	if (philo->philo_id == philo->args->nbr_philo)
+		pthread_mutex_unlock(&philo->args->end);
 	return ((void *)philo);
 }
 

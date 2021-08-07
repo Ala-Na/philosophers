@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 15:45:17 by anadege           #+#    #+#             */
-/*   Updated: 2021/08/06 22:43:05 by anadege          ###   ########.fr       */
+/*   Updated: 2021/08/07 16:24:15 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	init_args_mutex(t_arguments *args)
 		i++;
 	}
 	pthread_mutex_init(&args->end, NULL);
+	pthread_mutex_lock(&args->end);
 	pthread_mutex_init(&args->print_status, NULL);
 	return (0);
 }
