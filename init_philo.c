@@ -20,7 +20,10 @@ void	*philo_launch(void *received)
 	if (philo->id % 2 == 1)
 		script_for_philo(philo, &take_left_fork, &take_right_fork);
 	if (philo->id % 2 == 0 && !philo->args->end)
+	{
+		usleep(50);
 		script_for_philo(philo, &take_right_fork, &take_left_fork);
+	}
 	return (NULL);
 }
 
@@ -37,7 +40,7 @@ int	init_threads(t_philo *philo, t_arguments *args)
 	}
 	while (1)
 	{
-		usleep(1000);
+		usleep(10000);
 		if (check_nbr_of_meals(philo, args) == 1
 			|| check_if_dead(philo, args) == 1)
 		{
