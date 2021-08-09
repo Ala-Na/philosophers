@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 15:45:17 by anadege           #+#    #+#             */
-/*   Updated: 2021/08/07 16:24:15 by anadege          ###   ########.fr       */
+/*   Updated: 2021/08/09 14:24:55 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ int	init_args_mutex(t_arguments *args)
 		pthread_mutex_init(&args->forks[i], NULL);
 		i++;
 	}
-	pthread_mutex_init(&args->end, NULL);
-	pthread_mutex_lock(&args->end);
 	pthread_mutex_init(&args->print_status, NULL);
 	return (0);
 }
@@ -112,6 +110,7 @@ int	get_args(char **arr_str, t_arguments *args, int nbr, int *check_nbr)
 	}
 	if (nbr <= 4)
 		args->nbr_meals = -1;
+	args->end = 0;
 	return (0);
 }
 

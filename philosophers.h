@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 15:32:54 by anadege           #+#    #+#             */
-/*   Updated: 2021/08/07 17:53:55 by anadege          ###   ########.fr       */
+/*   Updated: 2021/08/09 20:22:48 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,6 @@
 extern unsigned long	g_launch;
 
 /*
-** Enum to simplify identification of philosophers' state.
-*/
-typedef enum	e_state
-{
-	EAT,
-	SLEEP,
-	THINK,
-	MUERTE
-}	t_state;
-
-/*
 ** Structure to stock arguments of philo programm.
 */
 typedef struct	s_arguments
@@ -47,9 +36,9 @@ typedef struct	s_arguments
 	int				time_eat;
 	int				time_sleep;
 	int				nbr_meals;
-	pthread_mutex_t	end;
 	pthread_mutex_t	print_status;
 	pthread_mutex_t	*forks;
+	int				end;
 }	t_arguments;
 
 /*
@@ -57,12 +46,12 @@ typedef struct	s_arguments
 */
 typedef struct	s_philo
 {
-	int				philo_id;
+	int				id;
 	pthread_t		thread;
-	t_state			state;
-	pthread_mutex_t	left_fork;
-	pthread_mutex_t	right_fork;
 	int				meals;
+	unsigned long	last_meal;
+	int				right_fork;
+	int				left_fork;
 	t_arguments		*args;
 }	t_philo;
 
@@ -70,6 +59,10 @@ typedef struct	s_philo
 ** Function to get timestamp since programm launch.
 */
 unsigned long	timestamp(void);
+int				watch_time(unsigned long action_time, t_arguments *args);
+
+
+int print_action(unsigned long time, t_philo *philo, char *str);
 
 /*
 ** Parsing functions to extract arguments.
@@ -86,13 +79,16 @@ t_philo	*init_philo(t_arguments *args);
 int		init_threads(t_philo *philo, t_arguments *args);
 void	*philo_launch(void *received);
 
-int	script_for_even(t_philo *philo);
-int	script_for_odd(t_philo *philo);
+int	script_for_philo(t_philo *philo, int (*fork_one)(t_philo *), int (*fork_two)(t_philo*));
 
 int	take_right_fork(t_philo *philo);
 int	take_left_fork(t_philo *philo);
 int	think (t_philo *philo);
 int	nap(t_philo *philo);
 int	eat(t_philo *philo);
+
+int	check_nbr_of_meals(t_philo *philo, t_arguments *args);
+int	check_if_dead(t_philo *philo, t_arguments *args);
+
 
 #endif

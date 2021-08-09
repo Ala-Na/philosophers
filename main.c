@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 15:32:34 by anadege           #+#    #+#             */
-/*   Updated: 2021/08/07 16:25:18 by anadege          ###   ########.fr       */
+/*   Updated: 2021/08/09 17:43:45 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ int	main(int argc, char **argv)
 		free(philo);
 		return (-1);
 	}
-	pthread_mutex_lock(&args->end);
-	printf("end of simulation\n");
 	free(args->forks);
 	free(args);
 	free(philo);
