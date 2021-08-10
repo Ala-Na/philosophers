@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/06 14:31:59 by anadege           #+#    #+#             */
-/*   Updated: 2021/08/09 20:39:33 by anadege          ###   ########.fr       */
+/*   Updated: 2021/08/10 21:00:29 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,13 @@ unsigned long	timestamp(void)
 	return (timestamp);
 }
 
-int	watch_time(unsigned long action_time, t_arguments *args)
+int	watch_time(unsigned long action_time, unsigned long start,
+		t_arguments *args)
 {
-	int	i;
-
-	i = timestamp();
 	while (!args->end)
 	{
-		if (timestamp() - i >= action_time)
-			break;
-		if (usleep(1000) != 0)
-			return (-1);
+		if (timestamp() >= action_time + start)
+			break ;
 	}
 	return (0);
 }
@@ -51,9 +47,20 @@ int	print_action(unsigned long time, t_philo *philo, char *str)
 		if (pthread_mutex_lock(&philo->args->print_status))
 			return (-1);
 		if (!philo->args->end)
-			printf("%li %i %s\n", time, philo->id, str);
+		{
+			printf("%li ", time);
+			printf("%i ", philo->id);
+			printf("%s\n", str);
+		}
 		if (pthread_mutex_unlock(&philo->args->print_status))
 			return (-1);
 	}
+	return (0);
+}
+
+int	ft_isdigit(int c)
+{
+	if (c >= '0' && c <= '9')
+		return (2048);
 	return (0);
 }

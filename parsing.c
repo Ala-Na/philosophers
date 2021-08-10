@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 15:45:17 by anadege           #+#    #+#             */
-/*   Updated: 2021/08/09 14:24:55 by anadege          ###   ########.fr       */
+/*   Updated: 2021/08/10 20:50:35 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,44 +29,39 @@ int	init_args_mutex(t_arguments *args)
 	return (0);
 }
 
-static int	return_value(long int res, long int sign,
-		int *check_nbr, int cursor)
+static int	return_value(long int res, int *sign, int cursor)
 {
 	if (cursor > 10 || ((res < 0 || res > INT_MAX) && sign > 0))
 	{
-		*check_nbr = -1;
+		*sign = -1;
 		return (-1);
 	}
-	else if ((res < 0 || res * sign < INT_MIN) && sign < 0)
+	else if ((res < 0 || res * *sign < INT_MIN) && sign < 0)
 	{
-		*check_nbr = -1;
+		*sign = -1;
 		return (0);
 	}
-	res *= sign;
+	res *= *sign;
 	return ((int)res);
 }
 
-int	ft_atoi_like(const char *nptr, int *check_nbr)
+int	ft_atoi_like(const char *nptr, int *sign)
 {
 	unsigned int	nbr;
 	long int		res;
-	long int		sign;
 	int				i;
 	int				start;
 
 	i = 0;
 	nbr = 0;
 	res = 0;
-	sign = 1;
+	*sign = 1;
 	while (nptr[i] == 32 || (nptr[i] >= 9 && nptr[i] <= 13))
 		i++;
 	if (nptr[i] == '-' || nptr[i] == '+')
 	{
 		if (nptr[i] == '-')
-		{
-			sign = -1;
-			*check_nbr = -1;
-		}
+			*sign = -1;
 		i++;
 	}
 	start = i;
@@ -75,14 +70,7 @@ int	ft_atoi_like(const char *nptr, int *check_nbr)
 		nbr = nptr[i++] - '0';
 		res = res * 10 + nbr;
 	}
-	return ((int)return_value(res, sign, check_nbr, i - start));
-}
-
-int	ft_isdigit(int c)
-{
-	if (c >= '0' && c <= '9')
-		return (2048);
-	return (0);
+	return ((int)return_value(res, sign, i - start));
 }
 
 int	get_args(char **arr_str, t_arguments *args, int nbr, int *check_nbr)
@@ -119,7 +107,8 @@ int	check_and_extract_args(int argc, char **argv, t_arguments *args)
 	int	check_nbr;
 
 	check_nbr = 0;
-	if (get_args(argv + 1, args, argc - 1, &check_nbr) == -1 || check_nbr == -1 || init_args_mutex(args) == -1)
+	if (get_args(argv + 1, args, argc - 1, &check_nbr) == -1
+		|| check_nbr == -1 || init_args_mutex(args) == -1)
 	{
 		if (args)
 			free(args);
