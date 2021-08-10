@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 20:40:20 by anadege           #+#    #+#             */
-/*   Updated: 2021/08/10 20:54:07 by anadege          ###   ########.fr       */
+/*   Updated: 2021/08/10 21:19:11 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	*philo_launch(void *received)
 {
 	t_philo	*philo;
-	int		res;
 
 	philo = (t_philo *)received;
 	if (philo->args->nbr_philo == 1)

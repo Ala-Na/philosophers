@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 15:45:17 by anadege           #+#    #+#             */
-/*   Updated: 2021/08/10 20:50:35 by anadege          ###   ########.fr       */
+/*   Updated: 2021/08/10 21:30:45 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@ int	init_args_mutex(t_arguments *args)
 
 static int	return_value(long int res, int *sign, int cursor)
 {
-	if (cursor > 10 || ((res < 0 || res > INT_MAX) && sign > 0))
+	if (cursor > 10 || ((res < 0 || res > INT_MAX) && *sign > 0))
 	{
 		*sign = -1;
 		return (-1);
 	}
-	else if ((res < 0 || res * *sign < INT_MIN) && sign < 0)
+	else if ((res < 0 || res * *sign < INT_MIN) && *sign < 0)
 	{
 		*sign = -1;
 		return (0);
