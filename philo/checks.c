@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/09 08:57:29 by anadege           #+#    #+#             */
-/*   Updated: 2021/08/10 20:38:22 by anadege          ###   ########.fr       */
+/*   Updated: 2021/08/11 17:32:25 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int	check_if_dead(t_philo *philo, t_arguments *args)
 			pthread_mutex_unlock(&philo[i].is_eating);
 			return (1);
 		}
-		pthread_mutex_unlock(&philo[i].is_eating);
 		i++;
 	}
 	return (0);

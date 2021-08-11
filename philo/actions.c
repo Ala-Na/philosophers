@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/07 17:27:16 by anadege           #+#    #+#             */
-/*   Updated: 2021/08/10 20:37:31 by anadege          ###   ########.fr       */
+/*   Updated: 2021/08/11 17:07:32 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int	eat(t_philo *philo)
 	if (watch_time((unsigned long)philo->args->time_eat, philo->last_meal,
 			philo->args))
 		return (-1);
-	pthread_mutex_unlock(&philo->is_eating);
 	return (0);
 }
 
