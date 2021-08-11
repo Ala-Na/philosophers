@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/07 17:27:16 by anadege           #+#    #+#             */
-/*   Updated: 2021/08/11 17:07:32 by anadege          ###   ########.fr       */
+/*   Updated: 2021/08/11 18:19:27 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@ int	take_left_fork(t_philo *philo)
 
 int	eat(t_philo *philo)
 {
+	pthread_mutex_lock(&philo->access_info);
+	philo->is_eating = 1;
+	pthread_mutex_unlock(&philo->access_info);
 	philo->last_meal = timestamp();
 	if (print_action(philo->last_meal, philo, "is eating") == -1)
 		return (-1);

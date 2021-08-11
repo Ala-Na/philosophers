@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 15:32:34 by anadege           #+#    #+#             */
-/*   Updated: 2021/08/11 16:40:11 by anadege          ###   ########.fr       */
+/*   Updated: 2021/08/11 18:06:57 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	exit_management(int exit, t_arguments *args, void *forks, t_philo *philo)
 	if (philo)
 	{
 		while (++i < args->nbr_philo)
-			pthread_mutex_destroy(&philo[i].is_eating);
+			pthread_mutex_destroy(&philo[i].access_info);
 		free(philo);
 	}
 	i = -1;

@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 20:40:20 by anadege           #+#    #+#             */
-/*   Updated: 2021/08/11 17:00:07 by anadege          ###   ########.fr       */
+/*   Updated: 2021/08/11 18:03:10 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	*philo_launch(void *received)
 		usleep(10);
 		script_for_philo(philo, &take_right_fork, &take_left_fork);
 	}
-	pthread_mutex_unlock(&philo->is_eating);
 	pthread_mutex_unlock(&philo->args->forks[philo->left_fork]);
 	if (philo->args->nbr_philo != 1)
 		pthread_mutex_unlock(&philo->args->forks[philo->right_fork]);
@@ -71,11 +70,12 @@ t_philo	*init_philo(t_arguments *args)
 		return (NULL);
 	while (i < args->nbr_philo)
 	{
+		pthread_mutex_init(&philo[i].access_info, NULL);
 		philo[i].id = i + 1;
 		philo[i].meals = 0;
 		philo[i].args = args;
 		philo[i].last_meal = 0;
-		pthread_mutex_init(&philo[i].is_eating, NULL);
+		philo[i].is_eating = 0;
 		philo[i].right_fork = philo[i].id;
 		if (philo[i].id == args->nbr_philo)
 			philo[i].right_fork = 0;

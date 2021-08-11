@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 15:32:54 by anadege           #+#    #+#             */
-/*   Updated: 2021/08/10 21:04:18 by anadege          ###   ########.fr       */
+/*   Updated: 2021/08/11 18:02:10 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,12 @@ typedef struct s_arguments
 */
 typedef struct s_philo
 {
+	pthread_mutex_t	access_info;
 	int				id;
 	pthread_t		thread;
 	int				meals;
 	unsigned long	last_meal;
-	pthread_mutex_t	is_eating;
+	int				is_eating;
 	int				right_fork;
 	int				left_fork;
 	t_arguments		*args;

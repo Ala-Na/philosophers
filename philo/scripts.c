@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/07 17:27:16 by anadege           #+#    #+#             */
-/*   Updated: 2021/08/10 20:57:31 by anadege          ###   ########.fr       */
+/*   Updated: 2021/08/11 18:19:35 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,11 @@ void	script_for_philo(t_philo *philo, int (*fork_one)(t_philo*),
 		if ((!philo->args->end && fork_one(philo) == -1)
 			|| (!philo->args->end && fork_two(philo) == -1))
 			return ;
-		if (!pthread_mutex_lock(&philo->is_eating) && !philo->args->end)
+		if (!philo->args->end)
 			eat_res = eat(philo);
-		pthread_mutex_unlock(&philo->is_eating);
+		pthread_mutex_lock(&philo->access_info);
+		philo->is_eating = 0;
+		pthread_mutex_unlock(&philo->access_info);
 		if (eat_res != 0)
 			return ;
 		if ((!philo->args->end && nap(philo) == -1)
