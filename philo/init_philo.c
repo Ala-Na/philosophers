@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 20:40:20 by anadege           #+#    #+#             */
-/*   Updated: 2021/08/11 18:03:10 by anadege          ###   ########.fr       */
+/*   Updated: 2021/08/11 18:32:48 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,14 @@ void	*philo_launch(void *received)
 		script_for_unique_philo(philo, &take_left_fork);
 	else if (philo->id % 2 == 1)
 		script_for_philo(philo, &take_left_fork, &take_right_fork);
-	else if (philo->id % 2 == 0 && !philo->args->end)
+	else if (philo->id % 2 == 0 && !pthread_mutex_lock(&philo->access_info)
+		&& !philo->args->end)
 	{
 		usleep(10);
+		pthread_mutex_unlock(&philo->access_info);
 		script_for_philo(philo, &take_right_fork, &take_left_fork);
 	}
+	pthread_mutex_unlock(&philo->access_info);
 	pthread_mutex_unlock(&philo->args->forks[philo->left_fork]);
 	if (philo->args->nbr_philo != 1)
 		pthread_mutex_unlock(&philo->args->forks[philo->right_fork]);

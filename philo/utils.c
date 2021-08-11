@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/06 14:31:59 by anadege           #+#    #+#             */
-/*   Updated: 2021/08/10 21:18:55 by anadege          ###   ########.fr       */
+/*   Updated: 2021/08/11 18:57:12 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,13 @@ int	print_action(unsigned long time, t_philo *philo, char *str)
 	{
 		if (pthread_mutex_lock(&philo->args->print_status))
 			return (-1);
-		if (!philo->args->end)
+		if (!pthread_mutex_lock(&philo->access_info) && !philo->args->end)
 		{
 			printf("%li ", time);
 			printf("%i ", philo->id);
 			printf("%s\n", str);
 		}
+		pthread_mutex_unlock(&philo->access_info);
 		if (pthread_mutex_unlock(&philo->args->print_status))
 			return (-1);
 	}
