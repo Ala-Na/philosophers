@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/06 14:31:59 by anadege           #+#    #+#             */
-/*   Updated: 2021/08/11 18:57:12 by anadege          ###   ########.fr       */
+/*   Updated: 2021/08/12 17:52:56 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ unsigned long	timestamp(void)
 	return (timestamp);
 }
 
-int	watch_time(unsigned long action_time, unsigned long start,
+int	watched_time_pass(unsigned long action_time, unsigned long start,
 		t_arguments *args)
 {
-	while (!args->end)
+	while (!check_end(args, 0))
 	{
 		if (timestamp() >= action_time + start)
 			break ;
@@ -42,7 +42,7 @@ int	watch_time(unsigned long action_time, unsigned long start,
 
 int	print_action(unsigned long time, t_philo *philo, char *str)
 {
-	if (!philo->args->end)
+	if (!check_end(philo->args, 0))
 	{
 		if (pthread_mutex_lock(&philo->args->print_status))
 			return (-1);
@@ -64,4 +64,18 @@ int	ft_isdigit(int c)
 	if (c >= '0' && c <= '9')
 		return (2048);
 	return (0);
+}
+
+int	modify_philo_int_info(t_philo *philo, int *info, int new_res, int new_time)
+{
+	if (pthread_mutex_lock(&philo->access_info))
+		return (-1);
+	if (new_res == -1)
+		*info += 1;
+	else
+		*info = new_res;
+	if (new_time == 1)
+		philo->last_meal = timestamp();
+	pthread_mutex_unlock(&philo->access_info);
+	return (1);
 }

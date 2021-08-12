@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 15:32:54 by anadege           #+#    #+#             */
-/*   Updated: 2021/08/11 18:02:10 by anadege          ###   ########.fr       */
+/*   Updated: 2021/08/12 20:33:00 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct s_arguments
 	int				nbr_meals;
 	pthread_mutex_t	print_status;
 	pthread_mutex_t	*forks;
+	pthread_mutex_t	protect_end;
 	int				end;
 }	t_arguments;
 
@@ -55,6 +56,7 @@ typedef struct s_philo
 	int				is_eating;
 	int				right_fork;
 	int				left_fork;
+	int				held_forks;
 	t_arguments		*args;
 }	t_philo;
 
@@ -62,8 +64,10 @@ typedef struct s_philo
 ** Function to get timestamp since programm launch.
 */
 unsigned long	timestamp(void);
-int				watch_time(unsigned long action_time, unsigned long start,
-					t_arguments *args);
+int				watched_time_pass(unsigned long action_time,
+					unsigned long start, t_arguments *args);
+int				modify_philo_int_info(t_philo *philo, int *info, int new_res,
+					int new_time);
 
 int				print_action(unsigned long time, t_philo *philo, char *str);
 
@@ -91,6 +95,10 @@ int				eat(t_philo *philo);
 
 int				check_nbr_of_meals(t_philo *philo, t_arguments *args);
 int				check_if_dead(t_philo *philo, t_arguments *args);
+int				check_end(t_arguments *args, int change);
+int				check_is_eating(t_philo *philo);
+int				check_last_meal(t_philo *philo, t_arguments *args,
+					unsigned long curr_time);
 
 int				exit_management(int exit, t_arguments *args, void *forks,
 					t_philo *philo);
