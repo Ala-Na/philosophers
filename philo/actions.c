@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/07 17:27:16 by anadege           #+#    #+#             */
-/*   Updated: 2021/08/12 17:57:20 by anadege          ###   ########.fr       */
+/*   Updated: 2021/08/20 19:29:17 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,12 @@ int	nap(t_philo *philo)
 {
 	unsigned long	start_nap;
 
+	if (print_action(start_nap, philo, "is sleeping") == -1)
+		return (-1);
 	pthread_mutex_unlock(&philo->args->forks[philo->right_fork]);
 	pthread_mutex_unlock(&philo->args->forks[philo->left_fork]);
 	philo->held_forks = 0;
 	start_nap = timestamp();
-	if (print_action(start_nap, philo, "is sleeping") == -1)
-		return (-1);
 	if (watched_time_pass((unsigned long)philo->args->time_sleep, start_nap,
 			philo->args))
 		return (-1);
