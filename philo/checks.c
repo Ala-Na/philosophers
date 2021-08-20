@@ -46,7 +46,7 @@ int	check_if_dead(t_philo *philo, t_arguments *args)
 		{
 			pthread_mutex_lock(&args->print_status);
 			if (!check_end(args, 1))
-				printf("%li %i is dead\n", curr_time, i + 1);
+				printf("%li %i died\n", curr_time, i + 1);
 			pthread_mutex_unlock(&args->print_status);
 			return (1);
 		}
