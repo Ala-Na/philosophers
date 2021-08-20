@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 20:40:20 by anadege           #+#    #+#             */
-/*   Updated: 2021/08/12 17:42:08 by anadege          ###   ########.fr       */
+/*   Updated: 2021/08/20 22:37:27 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ int	init_threads(t_philo *philo, t_arguments *args)
 	while (1)
 	{
 		usleep(500);
-		if (check_nbr_of_meals(philo, args) == 1
-			|| check_if_dead(philo, args) == 1)
+		if (check_if_dead(philo, args) == 1
+			|| check_nbr_of_meals(philo, args) == 1)
 		{
 			i = -1;
 			while (++i < args->nbr_philo)
