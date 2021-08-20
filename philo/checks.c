@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/09 08:57:29 by anadege           #+#    #+#             */
-/*   Updated: 2021/08/12 20:28:01 by anadege          ###   ########.fr       */
+/*   Updated: 2021/08/20 22:23:31 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ int	check_if_dead(t_philo *philo, t_arguments *args)
 	unsigned long	curr_time;
 
 	i = 0;
-	curr_time = timestamp();
 	while (i < args->nbr_philo)
 	{
+		curr_time = timestamp();
 		if (check_is_eating(philo) == 0
 			&& check_last_meal(&philo[i], args, curr_time))
 		{
