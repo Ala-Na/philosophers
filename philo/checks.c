@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/09 08:57:29 by anadege           #+#    #+#             */
-/*   Updated: 2021/08/20 22:41:25 by anadege          ###   ########.fr       */
+/*   Updated: 2021/08/20 23:28:56 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	check_last_meal(t_philo *philo, t_arguments *args, unsigned long curr_time)
 	int	res;
 
 	pthread_mutex_lock(&philo->access_info);
-	if (curr_time - philo->last_meal >= args->time_die)
+	if (curr_time - philo->last_meal > args->time_die)
 		res = 1;
 	else
 		res = 0;
