@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/07 17:27:16 by anadege           #+#    #+#             */
-/*   Updated: 2021/08/24 20:29:35 by anadege          ###   ########.fr       */
+/*   Updated: 2021/08/24 21:16:29 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	script_for_philo(t_philo *philo, int (*fork_one)(t_philo*),
 	eat_res = 0;
 	while (!check_end(philo->args, 0))
 	{
-		if (fork_one(philo) == -1
+		if ((!check_end(philo->args, 0) && fork_one(philo) == -1)
 			|| (!check_end(philo->args, 0) && fork_two(philo) == -1))
 			return ;
 		eat_res = eat(philo);

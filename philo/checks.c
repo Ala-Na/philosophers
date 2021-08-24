@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/09 08:57:29 by anadege           #+#    #+#             */
-/*   Updated: 2021/08/24 21:13:27 by anadege          ###   ########.fr       */
+/*   Updated: 2021/08/24 21:21:25 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,10 @@ int	check_nbr_of_meals(t_philo *philo, t_arguments *args)
 	nbr_meals = args->nbr_meals;
 	i = 0;
 	while (nbr_meals != -1 && i < args->nbr_philo
+		&& pthread_mutex_lock(&philo->access_info)
 		&& philo[i].meals >= nbr_meals)
 		i++;
+	pthread_mutex_unlock(&philo->access_info);
 	if (nbr_meals != -1 && i == args->nbr_philo)
 	{
 		pthread_mutex_lock(&args->protect_end);
@@ -41,12 +43,12 @@ int	check_if_dead(t_philo *philo, t_arguments *args)
 	curr_time = timestamp();
 	while (i < args->nbr_philo)
 	{
-		if (check_is_eating(&philo[i]) == 0
-			&& check_last_meal(&philo[i], args, curr_time)
-			&& check_end(args, 1) == 1)
+		if (!pthread_mutex_lock(&args->print_status)
+			&& check_is_eating(&philo[i]) == 0
+			&& check_last_meal(&philo[i], args, curr_time))
 		{
-			pthread_mutex_lock(&args->print_status);
-			printf("%li %i died\n", curr_time, i + 1);
+			if (check_end(args, 1) == 1)
+				printf("%li %i died\n", curr_time, i + 1);
 			pthread_mutex_unlock(&args->print_status);
 			return (1);
 		}
