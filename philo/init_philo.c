@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 20:40:20 by anadege           #+#    #+#             */
-/*   Updated: 2021/08/20 22:37:27 by anadege          ###   ########.fr       */
+/*   Updated: 2021/08/24 20:30:20 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ void	*philo_launch(void *received)
 	philo = (t_philo *)received;
 	if (philo->args->nbr_philo == 1)
 		script_for_unique_philo(philo, &take_left_fork);
-	else if (philo->id % 2 == 1)
+	else if (philo->id == 1)
 		script_for_philo(philo, &take_left_fork, &take_right_fork);
-	else if (philo->id % 2 == 0 && !check_end(philo->args, 0))
+	else if (philo->id != 0 && !check_end(philo->args, 0))
 	{
-		usleep(10);
+		//usleep(10);
 		script_for_philo(philo, &take_right_fork, &take_left_fork);
 	}
 	if (philo->held_forks >= 1)
