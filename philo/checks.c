@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/09 08:57:29 by anadege           #+#    #+#             */
-/*   Updated: 2021/08/24 21:21:25 by anadege          ###   ########.fr       */
+/*   Updated: 2021/08/24 21:25:40 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,12 @@ int	check_nbr_of_meals(t_philo *philo, t_arguments *args)
 	while (nbr_meals != -1 && i < args->nbr_philo
 		&& pthread_mutex_lock(&philo->access_info)
 		&& philo[i].meals >= nbr_meals)
+	{
 		i++;
-	pthread_mutex_unlock(&philo->access_info);
+		pthread_mutex_unlock(&philo->access_info);
+	}
+	if (philo[i].meals < nbr_meals)
+		pthread_mutex_unlock(&philo->access_info);
 	if (nbr_meals != -1 && i == args->nbr_philo)
 	{
 		pthread_mutex_lock(&args->protect_end);
