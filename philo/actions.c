@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/07 17:27:16 by anadege           #+#    #+#             */
-/*   Updated: 2021/08/24 20:07:25 by anadege          ###   ########.fr       */
+/*   Updated: 2021/08/24 20:57:04 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,21 @@
 
 int	take_right_fork(t_philo *philo)
 {
-	printf("enter right fork for %i (fork n°%i)\n", philo->id, philo->right_fork);
 	if (pthread_mutex_lock(&philo->args->forks[philo->right_fork]))
 		return (-1);
 	philo->held_forks += 1;
 	if (print_action(timestamp(), philo, "has taken a fork") == -1)
 		return (-1);
-	printf("exit take right fork for %i\n", philo->id);
 	return (0);
 }
 
 int	take_left_fork(t_philo *philo)
 {
-	printf("enter left fork for %i(fork n°%i)\n", philo->id, philo->left_fork);
 	if (pthread_mutex_lock(&philo->args->forks[philo->left_fork]))
 		return (-1);
 	philo->held_forks += 1;
 	if (print_action(timestamp(), philo, "has taken a fork") == -1)
 		return (-1);
-	printf("exit take left fork for %i\n", philo->id);
 	return (0);
 }
 
@@ -66,5 +62,8 @@ int	nap(t_philo *philo)
 
 int	think(t_philo *philo)
 {
-	return (print_action(timestamp(), philo, "is thinking"));
+	print_action(timestamp(), philo, "is thinking");
+	if (philo->args->nbr_philo % 2 == 1)
+		usleep((philo->args->time_die / 5));
+	return (0);
 }
