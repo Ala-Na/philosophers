@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/09 08:57:29 by anadege           #+#    #+#             */
-/*   Updated: 2021/08/24 20:00:57 by anadege          ###   ########.fr       */
+/*   Updated: 2021/08/24 21:13:27 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@ int	check_if_dead(t_philo *philo, t_arguments *args)
 	curr_time = timestamp();
 	while (i < args->nbr_philo)
 	{
-		if (!pthread_mutex_lock(&args->print_status)
-			&& check_is_eating(&philo[i]) == 0
-			&& check_last_meal(&philo[i], args, curr_time))
+		if (check_is_eating(&philo[i]) == 0
+			&& check_last_meal(&philo[i], args, curr_time)
+			&& check_end(args, 1) == 1)
 		{
-			if (check_end(args, 1) == 1)
-				printf("%li %i died\n", curr_time, i + 1);
+			pthread_mutex_lock(&args->print_status);
+			printf("%li %i died\n", curr_time, i + 1);
 			pthread_mutex_unlock(&args->print_status);
 			return (1);
 		}
