@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 15:32:54 by anadege           #+#    #+#             */
-/*   Updated: 2021/08/12 20:33:00 by anadege          ###   ########.fr       */
+/*   Updated: 2021/08/25 13:54:39 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int				modify_philo_int_info(t_philo *philo, int *info, int new_res,
 int				print_action(unsigned long time, t_philo *philo, char *str);
 
 int				check_and_extract_args(int agrc, char **argv,
-					t_arguments *args);
+					t_arguments *args, void **forks);
 int				get_args(char **arr_str, t_arguments *args, int nbr,
 					int *check_nbr);
 int				ft_isdigit(int c);

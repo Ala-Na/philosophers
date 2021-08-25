@@ -6,18 +6,19 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 15:45:17 by anadege           #+#    #+#             */
-/*   Updated: 2021/08/12 15:06:37 by anadege          ###   ########.fr       */
+/*   Updated: 2021/08/25 13:59:25 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	init_args_mutex(t_arguments *args)
+int	init_args_mutex(t_arguments *args, void **forks)
 {
 	int	i;
 
 	i = 0;
 	args->forks = malloc(sizeof(*args->forks) * args->nbr_philo);
+	*forks = args->forks;
 	if (!args->forks)
 		return (-1);
 	while (i < args->nbr_philo)
@@ -103,13 +104,16 @@ int	get_args(char **arr_str, t_arguments *args, int nbr, int *check_nbr)
 	return (0);
 }
 
-int	check_and_extract_args(int argc, char **argv, t_arguments *args)
+int	check_and_extract_args(int argc, char **argv, t_arguments *args, void **forks)
 {
 	int	check_nbr;
 
 	check_nbr = 0;
 	if (get_args(argv + 1, args, argc - 1, &check_nbr) == -1
-		|| check_nbr == -1 || init_args_mutex(args) == -1)
+		|| check_nbr == -1 || args->nbr_philo == 0
+		|| args->time_die < 60 || args->time_eat < 60
+		|| args->time_sleep < 60
+		|| init_args_mutex(args, forks) == -1)
 	{
 		if (args)
 			free(args);
