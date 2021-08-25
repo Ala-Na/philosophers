@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 15:32:34 by anadege           #+#    #+#             */
-/*   Updated: 2021/08/25 14:39:59 by anadege          ###   ########.fr       */
+/*   Updated: 2021/08/25 14:42:36 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	error_message(int error)
 	{
 		printf("Error in  arguments received.\n\nphilo need 4 or 5 arguments");
 		printf(" which should be positive integers superior to 0 for");
-		printf(" philosophers or 60 milliseconds for times):\n");
+		printf(" philosophers or 60 milliseconds for times:\n");
 		printf("[number_of_philosophers]");
 		printf("\n[time_to_die]\n[time_to_eat]\n[time_to_sleep]\n");
 		printf("[number_of_times_each_philosopher_must_eat] (additionnal)\n\n");
@@ -69,7 +69,8 @@ int	main(int argc, char **argv)
 	args = malloc(sizeof(*args));
 	if (!args)
 		return (-1);
-	if (argc < 5 || argc > 6 || check_and_extract_args(argc, argv, args, &forks) == -1)
+	if (argc < 5 || argc > 6
+		|| check_and_extract_args(argc, argv, args, &forks) == -1)
 		return (exit_management(-2, NULL, forks, philo));
 	philo = init_philo(args);
 	if (!philo || init_threads(philo, args) == -1)

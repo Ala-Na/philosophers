@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 15:45:17 by anadege           #+#    #+#             */
-/*   Updated: 2021/08/25 13:59:25 by anadege          ###   ########.fr       */
+/*   Updated: 2021/08/25 14:43:07 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,8 @@ int	get_args(char **arr_str, t_arguments *args, int nbr, int *check_nbr)
 	return (0);
 }
 
-int	check_and_extract_args(int argc, char **argv, t_arguments *args, void **forks)
+int	check_and_extract_args(int argc, char **argv, t_arguments *args,
+		void **forks)
 {
 	int	check_nbr;
 
